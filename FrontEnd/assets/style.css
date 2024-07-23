@@ -53,6 +53,15 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+.bar_editor {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+}
 header {
 	display: flex;
 	justify-content: space-between;
@@ -124,6 +133,26 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+#portfolio .filter {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	gap: 10px;
+}
+.filter .btn_filter{
+	padding: 10px 20px;
+    border-radius: 60px;
+    border: #1D6154 1px solid;
+    background: none;
+    color: #1D6154;
+    font-family: 'Syne';
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+    width: auto;
+    box-sizing: border-box;
 }
 .gallery {
 	width: 100%;
