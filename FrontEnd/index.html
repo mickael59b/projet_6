@@ -7,7 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<script src="https://kit.fontawesome.com/5fcbfd7080.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
@@ -24,6 +24,28 @@
 	</nav>
 </header>
 <main>
+	<div id="modal" class="modal">
+		<div class="modal-overlay"></div>
+		<article class="modal-container" id="galerie_works">
+			<!-- Header Section -->
+			<header class="modal-container-header">
+				<h3 class="modal-container-title">Galerie photo</h3>
+				<button class="icon-button close-button">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+						<path fill="none" d="M0 0h24v24H0z" />
+						<path fill="currentColor" d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+					</svg>
+				</button>
+			</header>
+			<!-- Body Section -->
+			<section class="modal-container-body" id="works">
+				<!-- Gallery content goes here -->
+			</section>
+			<footer class="modal-container-footer">
+				<button class="button is-primary" id="add-photo-button">Ajouter une photo</button>
+			</footer>
+		</article>
+	</div>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
@@ -54,7 +76,6 @@
 		</form>
 	</section>
 </main>
-
 <footer>
 	<nav>
 		<ul>
