@@ -62,7 +62,7 @@ body {
     padding: 10px;
     margin: 10px 0;
 }
-i{
+.link_modal i, .bar_editor i{
 	margin-right: 0.3em;
 }
 header {
@@ -85,13 +85,18 @@ header {
     z-index: 1000;
 }
 
+#add_photo{
+	display: none;
+}
 .modal-container {
     width: 630px;
-    height: 688px;
     background-color: #FFFFFF;
     border-radius: 10px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 50px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
+	padding: 30px;
     flex-direction: column;
     position: relative;
 }
@@ -133,19 +138,65 @@ header {
     right: 10px;
 }
 
-.icon-button svg {
-    fill: #333;
-}
-
 /* Styles pour la grille de travaux */
+#galerie_works .modal-container-body{
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
 .modal-container-body {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-auto-rows: 1fr;
 	grid-column-gap: 8px;
 	grid-row-gap: 10px;
 	margin: 30px;
-  }
+}
+
+/* Add Photo Styles */
+.add-photo-container {
+	display: grid;
+    text-align: center;
+    padding: 20px;
+	background: #E8F1F6;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+	justify-content: center;
+}
+
+.add-photo-container .fa-image{
+	font-size: 76px;
+	margin-bottom: 5px;
+	color:#B9C5CC;
+}
+
+.add-photo-container:hover {
+    border-color: #007bff;
+}
+
+.add-photo-text {
+    font-size: 1.2em;
+	background: #CBD6DC;
+	border-radius: 50px;
+	padding: 10px;
+}
+
+.photo-preview-wrapper{
+	margin-bottom: 10px;
+
+}
+#photo-preview{
+	display: none;
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+
+}
+
+.add-photo-note {
+    margin-top: 10px;
+    font-size:10px;
+    color: #444444;
+}
   
   /* Styles pour chaque élément de travail */
   .work-item {
@@ -160,39 +211,54 @@ header {
 	border-radius: 8px; /* Arrondir les coins des images (optionnel) */
   }
   
-  /* Styles pour le bouton de suppression */
-  .delete-button {
+ /* Styles pour le bouton de suppression */
+.delete-button {
 	position: absolute; /* Positionner le bouton par rapport à .work-item */
 	top: 8px; /* Distance du haut */
 	right: 8px; /* Distance de la droite */
 	background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent (optionnel) */
+	border-radius: 2px;
 	border: none; /* Enlever les bordures par défaut du bouton */
-	border-radius: 50%; /* Rendre le bouton circulaire */
 	padding: 8px; /* Espace intérieur du bouton */
 	cursor: pointer; /* Curseur pointer pour montrer que c'est cliquable */
-  }
-  
-  /* Styles pour le SVG à l'intérieur du bouton */
-  .delete-button svg {
-	fill: white; /* Couleur des icônes SVG */
-  }
-  
+	color: #fff;
+	display: flex; /* Utiliser flexbox pour centrer le contenu */
+	align-items: center; /* Aligner verticalement */
+	justify-content: center; /* Aligner horizontalement */
+}  
+
+.upload{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #E8F1F6;
+	border-radius: 3px;
+	height: 169px;
+	justify-content: center;
+	text-align: center;
+
+} 
+.form-group{
+	display: grid;
+}
+.upload label{
+	margin-bottom: 27px;
+    font-size: 5.1em;
+    color: #B9C5CC;
+}
   /* Effet au survol du bouton */
   .delete-button:hover {
 	background-color: rgba(0, 0, 0, 0.8); /* Changer la couleur de fond au survol */
   }
 
-.button.is-primary {
-    background-color: #007bff;
+.button{
+    background-color: #1D6154;
     color: #fff;
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    width: auto;
+	padding: 10px 49px;
+    border-radius: 60px;
     cursor: pointer;
-}
-
-.button.is-primary:hover {
-    background-color: #0056b3;
 }
 
 section {
@@ -270,6 +336,7 @@ li:hover {
 	font-size: 14px;
     margin-left: 10px;
     color: #000000;
+	font-family: 'Work Sans';
 }
 #portfolio .filter {
 	display: flex;
@@ -316,20 +383,20 @@ margin: auto;
 #contact h2 , #login h2{
 	margin-bottom: 20px;
 }
-#contact form , #login form {
+#contact form , #login form{
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input , #login input {
+#contact input , #login input ,#add_photo input,#add_photo select{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label , #login label {
+#contact label , #login label ,#add_photo label{
 	margin: 2em 0 1em 0;
 }
 #contact textarea {

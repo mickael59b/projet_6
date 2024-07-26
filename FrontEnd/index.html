@@ -45,6 +45,48 @@
 				<button class="button is-primary" id="add-photo-button">Ajouter une photo</button>
 			</footer>
 		</article>
+		<!-- Ajout Photo -->
+		<article class="modal-container" id="add_photo">
+			<!-- Header Section -->
+			<header class="modal-container-header">
+				<h3 class="modal-container-title">Ajout photo</h3>
+				<button class="icon-button close-button">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+						<path fill="none" d="M0 0h24v24H0z" />
+						<path fill="currentColor" d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+					</svg>
+				</button>
+			</header>
+			<!-- Body Section -->
+			<section class="modal-container-body">
+				<form>
+					<div class="add-photo-container" id="add-photo-container">
+						<!-- Zone de prévisualisation -->
+						<div class="photo-preview-wrapper">
+							<i class="fa-regular fa-image" aria-hidden="true" id="default-icon"></i>
+							<img id="photo-preview" src="" alt="Prévisualisation de la photo">
+						</div>
+						<input type="file" id="photo-file-input" accept="image/*" style="display: none;">
+						<div class="add-photo-text">+ Ajouter photo</div>
+						<div class="add-photo-note">jpg, png : 4mo max</div>
+					</div>
+					<div class="form-group">
+						<label for="photo-title">Titre</label>
+						<input type="text" id="photo-title" name="photo-title">
+					</div>
+					<div class="form-group">
+						<label for="photo-category">Catégorie</label>
+						<select id="photo-category" name="photo-category">
+							<option value="">Sélectionner une catégorie</option>
+							<!-- Options de catégorie seront ajoutées dynamiquement -->
+						</select>
+					</div>
+				</form>
+			</section>
+			<footer class="modal-container-footer">
+				<button class="button is-primary" id="submit-photo-button">Valider</button>
+			</footer>
+		</article>
 	</div>
 	<section id="introduction">
 		<figure>
