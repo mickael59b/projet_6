@@ -57,12 +57,14 @@ function setupEditorBar() {
             closeButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     modal.style.display = 'none'; // Cache le modal
+                    load_works();
                 });
             });
 
             modal.addEventListener('click', function(event) {
                 if (event.target === modal) {
                     modal.style.display = 'none'; // Cache le modal en cliquant en dehors de la fenêtre du modal
+                    load_works();
                 }
             });
 
@@ -284,7 +286,7 @@ async function load_works(categorie = 'tous') {
             img.src = work.imageUrl;
             img.alt = work.title;
 
-            const title = document.createElement('p');
+            const title = document.createElement('figcaption');
             title.textContent = work.title;
 
             workItem.append(img, title);
