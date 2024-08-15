@@ -72,7 +72,7 @@ header {
 }
 
 /* Basic styling for modal and buttons */
-#modal {
+#modalworks {
     position: fixed;
     top: 0;
     left: 0;
@@ -197,7 +197,14 @@ header {
     font-size:10px;
     color: #444444;
 }
-  
+.return-link{
+	position: absolute;
+    top: 25px;
+    left: 25px;
+    height: 21px;
+    width: 21px;
+	cursor: pointer;
+} 
   /* Styles pour chaque élément de travail */
   .work-item {
 	position: relative; /* Pour que le bouton de suppression puisse être positionné correctement */
@@ -206,11 +213,11 @@ header {
   /* Styles pour les images */
   .work-item img {
 	width: 100%; /* Assure que les images remplissent le conteneur */
-	height: auto; /* Maintient les proportions de l'image */
+	height: 100%; /* Maintient les proportions de l'image */
 	display: block; /* Élimine les espaces blancs sous les images */
 	border-radius: 8px; /* Arrondir les coins des images (optionnel) */
   }
-  
+
  /* Styles pour le bouton de suppression */
 .delete-button {
 	position: absolute; /* Positionner le bouton par rapport à .work-item */
@@ -366,11 +373,6 @@ li:hover {
     grid-column-gap: 20px;
     grid-row-gap: 20px;
     margin-top: 3em;
-}
-
-.gallery img {
-	width: 100%;
-
 }
 #contact ,#login{
 	width: 50%;
