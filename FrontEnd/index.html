@@ -16,8 +16,8 @@
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
+			<li><a href="#gallery">projets</a></li>
+			<li><a href="#contact">contact</a></li>
 			<li><a href="./login.html" id="link_connect">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
@@ -48,7 +48,7 @@
 		<!-- Modal pour Ajout de Photo -->
 		<article class="modal-container" id="add_photo" style="display: none;">
 			<header class="modal-container-header">
-				<a href="#" class="return-link" onclick="closeAddPhotoModal(); return false;">
+				<a href="#" class="return-link">
 					<img src="./assets/icons/arrow-left.png" alt="Retour">
 				</a>
 				<h3 class="modal-container-title">Ajout photo</h3>
@@ -102,7 +102,7 @@
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
 		<div class="filter"></div>
-		<div class="gallery"></div>
+		<div class="gallery" id="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>

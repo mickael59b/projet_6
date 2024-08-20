@@ -1,6 +1,7 @@
 const url_api = "http://localhost:5678/api/";
 const filter_bar = document.querySelector('.filter');
 const portfolio_h2 = document.querySelector("#portfolio h2");
+let previousModalId = null;
 
 window.onload = function() {
     setupEditorBar(); // Configure la barre d'édition et le modal
@@ -40,15 +41,15 @@ function setupEditorBar() {
         }
 
         const openButton = document.querySelector('.link_modal');
-        const modal = document.getElementById('modalworks');
+        const modalWorks = document.getElementById('modalworks');
         const galerieWorks = document.getElementById('galerie_works');
         const addPhoto = document.getElementById('add_photo');
         const closeButtons = document.querySelectorAll('.close-button');
 
-        if (openButton && modal && closeButtons.length) {
+        if (openButton && modalWorks && closeButtons.length) {
             openButton.addEventListener('click', async function() {
-                console.log('Modal ouvert');
-                modal.style.display = 'flex'; // Affiche le modal
+                previousModalId = galerieWorks.style.display === 'block' ? 'galerie_works' : null; // Stocke l'ID de la modal précédente
+                modalWorks.style.display = 'flex'; // Affiche le modal
                 galerieWorks.style.display = 'block'; // Affiche l'article de la galerie
                 addPhoto.style.display = 'none'; // Cache l'article d'ajout de photo
                 await loadWorksInModal(); // Charge les travaux dans le modal
@@ -56,29 +57,52 @@ function setupEditorBar() {
 
             closeButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    modal.style.display = 'none'; // Cache le modal
-                    load_works();
+                    modalWorks.style.display = 'none'; // Cache le modal
+                    if (previousModalId) {
+                        document.getElementById(previousModalId).style.display = 'block'; // Affiche la modal précédente
+                        previousModalId = null; // Réinitialise la variable après retour
+                    } else {
+                        load_works();
+                    }
                 });
             });
 
-            modal.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none'; // Cache le modal en cliquant en dehors de la fenêtre du modal
-                    load_works();
+            modalWorks.addEventListener('click', function(event) {
+                if (event.target === modalWorks) {
+                    modalWorks.style.display = 'none'; // Cache le modal en cliquant en dehors de la fenêtre du modal
+                    if (previousModalId) {
+                        document.getElementById(previousModalId).style.display = 'block'; // Affiche la modal précédente
+                        previousModalId = null; // Réinitialise la variable après retour
+                    } else {
+                        load_works();
+                    }
                 }
             });
 
             const addPhotoButton = document.getElementById('add-photo-button');
             if (addPhotoButton) {
                 addPhotoButton.addEventListener('click', function() {
+                    previousModalId = 'galerie_works'; // Stocke l'ID de la modal précédente
                     galerieWorks.style.display = 'none'; // Cache l'article de la galerie
                     addPhoto.style.display = 'block'; // Affiche l'article d'ajout de photo
+                });
+            }
+
+            const returnLink = document.querySelector('.return-link');
+            if (returnLink) {
+                returnLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    if (previousModalId) {
+                        document.getElementById(previousModalId).style.display = 'block'; // Affiche la modal précédente
+                        addPhoto.style.display = 'none'; // Cache la modal d'ajout de photo
+                        previousModalId = null; // Réinitialise la variable après retour
+                    }
                 });
             }
         } else {
             console.error('Un ou plusieurs éléments nécessaires pour le modal sont manquants.');
             if (!openButton) console.error('Élément .link_modal non trouvé.');
-            if (!modal) console.error('Élément #modal non trouvé.');
+            if (!modalWorks) console.error('Élément #modalworks non trouvé.');
             if (!closeButtons.length) console.error('Élément(s) .close-button non trouvé(s).');
         }
     }
@@ -135,6 +159,7 @@ async function loadWorksInModal() {
 
                         if (deleteResult.ok) {
                             load_galerie.removeChild(workItem);
+                            load_works();
                         } else {
                             console.error('Échec de la suppression du travail :', deleteResult.statusText);
                         }
@@ -166,16 +191,11 @@ async function add_work() {
 
     submitButton.addEventListener('click', async function(event) {
         event.preventDefault(); // Empêche le comportement par défaut du bouton
-        console.log('Submit button clicked.');
 
         // Récupération des valeurs des champs
         const title = titleInput.value.trim();
         const category = categorySelect.value;
         const file = fileInput.files[0]; // Fichier image sélectionné
-
-        console.log('Title:', title);
-        console.log('Category:', category);
-        console.log('File:', file);
 
         // Vérification du token
         if (!token) {
@@ -183,15 +203,12 @@ async function add_work() {
             alert('Vous devez être connecté pour ajouter une œuvre.');
             return;
         }
-        console.log('Token trouvé:', token);
 
         // Validation des champs
         if (!title || !category || !file) {
             alert('Veuillez remplir tous les champs requis et sélectionner une image.');
-            console.warn('Champs manquants ou fichier non sélectionné.');
             return;
         }
-        console.log('Tous les champs sont remplis.');
 
         // Création du FormData
         const formData = new FormData();
@@ -199,28 +216,20 @@ async function add_work() {
         formData.append('title', title);
         formData.append('category', category);
 
-        console.log("FormData Keys:", Array.from(formData.keys()));
-        console.log("FormData Values:", Array.from(formData.values()));
-
         try {
             // Envoi de la requête POST
-            console.log('Envoi de la requête POST à', url_api + 'works');
             const response = await fetch(url_api + 'works', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Assurez-vous que l'en-tête est bien configuré
-                    // Ne définissez pas 'Content-Type' pour FormData
                 },
                 body: formData
             });
 
-            console.log('Réponse reçue:', response);
             const responseData = await response.text(); // Utilisez text() pour obtenir le corps brut en cas d'erreur
 
             if (response.ok) {
-                console.log('Réponse JSON:', responseData);
                 const data = JSON.parse(responseData);
-                console.log('Travail ajouté avec succès :', data);
                 alert('Travail ajouté avec succès.');
 
                 // Réinitialisation des champs du formulaire
@@ -235,16 +244,12 @@ async function add_work() {
                 addPhotoText.style.display = 'block'; // Affiche le texte "+ Ajouter photo"
                 addPhotoNote.style.display = 'block'; // Affiche la note "jpg, png : 4mo max"
 
-                console.log('Champs réinitialisés.');
-
                 // Fermeture de la modale
                 document.getElementById('add_photo').style.display = 'none';
                 document.getElementById('modalworks').style.display = 'none';
-                console.log('Modale fermée.');
 
                 // Recharger les travaux
                 load_works(); // Assurez-vous que cette fonction existe et fonctionne correctement
-                console.log('Travaux rechargés.');
             } else {
                 console.error('Échec de l\'ajout du travail :', response.status, response.statusText, responseData);
                 alert('Erreur lors de l\'ajout du travail. Vérifiez la console pour plus d\'informations.');
@@ -255,7 +260,6 @@ async function add_work() {
         }
     });
 }
-
 
 async function load_works(categorie = 'tous') {
     const container_load = document.querySelector('.gallery');
@@ -321,19 +325,35 @@ async function filter() {
 
             categoriesList.innerHTML = '';
 
+            // Fonction pour gérer l'ajout et suppression de la classe active
+            const handleFilterClick = (event, categoryName) => {
+                const allButtons = document.querySelectorAll('.btn_filter');
+                
+                // Supprime la classe active de tous les boutons
+                allButtons.forEach(button => button.classList.remove('active'));
+                
+                // Ajoute la classe active au bouton cliqué
+                event.currentTarget.classList.add('active');
+                
+                // Charge les travaux filtrés
+                load_works(categoryName);
+            };
+
+            // Bouton "Tous"
             const btn_filter = document.createElement('button');
             btn_filter.textContent = 'Tous';
-            btn_filter.className = 'btn_filter';
+            btn_filter.className = 'btn_filter active';
             btn_filter.dataset.nom = 'tous';
-            btn_filter.addEventListener('click', () => load_works('tous'));
+            btn_filter.addEventListener('click', (event) => handleFilterClick(event, 'tous'));
             categoriesList.append(btn_filter);
 
+            // Boutons pour chaque catégorie
             categories.forEach(category => {
                 const button = document.createElement('button');
                 button.textContent = category.name;
                 button.className = 'btn_filter';
                 button.dataset.nom = category.name;
-                button.addEventListener('click', () => load_works(category.name));
+                button.addEventListener('click', (event) => handleFilterClick(event, category.name));
                 categoriesList.append(button);
             });
 
@@ -404,5 +424,3 @@ function setupPhotoPreview() {
 }
 
 filter(); // Conserver l'appel à filter() si nécessaire pour d'autres éléments de filtrage
-
-

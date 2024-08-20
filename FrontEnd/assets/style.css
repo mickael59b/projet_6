@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	font-family: 'Work Sans';
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -99,6 +100,12 @@ header {
 	padding: 30px;
     flex-direction: column;
     position: relative;
+}
+
+#modalworks #works{
+	max-height: 500px; /* Définir une hauteur maximale pour activer le défilement */
+    overflow-y: auto; 
+	padding-right: 15px;
 }
 
 .modal-container-header,
@@ -311,6 +318,10 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+li #link_connect{
+	font-size: 16px;
+	font-weight: 600;
+}
 #introduction {
 	display: flex;
 	align-items: center;
@@ -364,6 +375,10 @@ li:hover {
     margin: 0;
     width: auto;
     box-sizing: border-box;
+}
+.btn_filter.active{
+	background: #1D6154;
+	color:#fff;
 }
 .gallery {
 	width: 100%;
