@@ -35,7 +35,7 @@ function setupEditorBar() {
             filter_bar.style.display = "none";
         }
 
-        const lien = document.querySelector('a');
+        const lien = document.getElementById('link_connect');
         if (lien) {
             lien.innerText = "logout";
         }
